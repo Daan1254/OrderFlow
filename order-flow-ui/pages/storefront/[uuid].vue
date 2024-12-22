@@ -1,59 +1,44 @@
 <template>
-  <div class="flex h-screen bg-background">
-    <div class="flex-1 flex flex-col">
-      <!-- Header -->
-      <div class="bg-white p-4 shadow-sm">
-        <h1 class="text-2xl font-bold text-center text-destructive">Bestel hier uw maaltijd</h1>
-      </div>
-
-      <!-- Categories -->
-      <div class="bg-white mt-4 p-4 flex h-max gap-6 overflow-x-auto">
-        <CategorieButton
-          v-for="category in categories"
-          :key="category"
-          :image="`/images/categories/McChicken.png`"
-          :category="category"
-          :currentCategory="selectedCategory"
-          :onClick="() => selectedCategory = category"
-        />
-      </div>
-
-      <!-- Products Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 overflow-y-auto">
-        <Card 
-          v-for="product in products" 
-          :key="product.id"
-          class="hover:shadow-lg transition-shadow bg-white"
-        >
-          <CardContent class="p-4 flex flex-col items-center">
-            <img
-              :src="product.image"
-              :alt="product.name"
-              class="w-32 h-32 object-cover rounded-md"
-            />
-            <h3 class="font-semibold mt-2 text-destructive">{{ product.name }}</h3>
-            <p class="text-secondary font-bold">€{{ product.price.toFixed(2) }}</p>
-            <Button 
-              class="mt-2 w-full"
-              size="default"
-            >
-              Toevoegen
-            </Button>
-          </CardContent>
-        </Card>
+  <template v-if="error">
+    <div class="flex h-screen bg-background items-center justify-center">
+      <div class="bg-white p-8 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold text-destructive mb-4">Error</h1>
+        <p class="text-gray-600">{{ error.message }}</p>
       </div>
     </div>
+  </template>
+  <div v-if="isLoading" class="flex h-screen bg-background">
+    <div class="flex-1 flex flex-col">
+      <div class="bg-white p-4 shadow-sm">
+        <h1 class="text-2xl font-bold text-center text-destructive">Loading...</h1>
+      </div>
+      <div class="flex-1 flex items-center justify-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-destructive"></div>
+      </div>
+    </div>
+  </div>
+  <div v-if="!isLoading && !error" class="flex h-screen bg-background">
+    <div class="flex-1 flex flex-col">
+      <StorefrontHeader :storeName="data?.data.name ?? 'Unknown'" />
 
+      <Categories :categories="categories" :selectedCategory="selectedCategory" />
+      <ProductGrid :products="products" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import Button from '~/components/shared/button.vue'
-import CategorieButton from '~/components/Storefront/CategorieButton.vue'
-
+import Categories from '~/components/Storefront/Categories.vue'
+import ProductGrid from '~/components/Storefront/ProductGrid.vue'
 import { ref } from 'vue'
+import { useStoreControllerGetStore } from "~/api/endpoints/store/store";
+const { uuid } = useRoute().params
+defineProps({
+  uuid: String
+})
 
-interface Product {
+
+export interface Product {
   id: number
   name: string
   price: number
@@ -94,4 +79,6 @@ const products: Product[] = [
 
 const categories = ["Burgers", "Sides", "Drinks"]
 const selectedCategory = ref("Burgers")
+const { data, isLoading, error } = useStoreControllerGetStore(uuid as string)
+
 </script>

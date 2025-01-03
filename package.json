@@ -37,6 +37,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2"
+    "@types/bcrypt": "^5.0.2",
+    "@vite-pwa/nuxt": "^0.10.6"
   }
 }

@@ -54,8 +54,8 @@ const { data } = useAuth();
 </script>
 
 <template>
-  <div class="h-screen w-screen flex flex-row gap-6">
-    <div class="flex flex-col gap-y-5 border-gray-200 bg-white px-6">
+  <div class="h-screen w-screen flex bg-white flex-row gap-0">
+    <div class="flex flex-col gap-y-5 border-gray-200 px-6 border-r shadow-sm">
       <div class="flex h-16 shrink-0 items-center">
         <h1 class="text-2xl font-bold">
           Order<span class="text-dashboardPrimary">Flow</span>
@@ -140,9 +140,7 @@ const { data } = useAuth();
         </ul>
       </nav>
     </div>
-    <div
-      class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 bg-dashboardBackground"
-    >
+    <div class="flex grow flex-col gap-y-5 overflow-y-auto px-12 mt-14">
       <slot />
     </div>
   </div>

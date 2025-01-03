@@ -29,7 +29,6 @@ export default NuxtAuthHandler({
       return true;
     },
     jwt: async ({ token, user, account }) => {
-      console.log(token, user, account);
       return token;
     },
   },

@@ -7,9 +7,9 @@ module.exports = {
   prefix: "",
   
   theme: {
-    colors: {
+    colors :{
       dashboardPrimary: "#1e90ff",
-      dashboardBackground: "#dfe4ea",
+      dashboardBackground: "#f1f2f6",
     },
     container: {
       center: true,

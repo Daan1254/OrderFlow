@@ -2,12 +2,10 @@
 definePageMeta({
   layout: "dashboard",
 });
-
-const { data } = useAuth();
 </script>
 
 <template>
   <div>
-    <h1>{{ data?.user.name }}</h1>
+    <h1>Store</h1>
   </div>
 </template>

@@ -7,6 +7,10 @@ module.exports = {
   prefix: "",
   
   theme: {
+    colors: {
+      dashboardPrimary: "#1e90ff",
+      dashboardBackground: "#dfe4ea",
+    },
     container: {
       center: true,
       padding: "2rem",

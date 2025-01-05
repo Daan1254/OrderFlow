@@ -16,6 +16,8 @@ export default defineEventHandler(async (event: H3Event) => {
   }
 
   event.context.auth = {
-    id: session.user.id,
+    user: {
+      ...session.user,
+    },
   };
 });

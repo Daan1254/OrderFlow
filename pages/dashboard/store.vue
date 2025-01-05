@@ -13,7 +13,8 @@ const storeForm = ref<UpdateStoreSchema>({
   name: "",
 });
 
-const onSubmit = async () => {
+const onSubmit = async (event: Event) => {
+  event.preventDefault();
   const result = updateStoreSchema.safeParse(storeForm.value);
 
   if (!result.success) {
@@ -21,13 +22,11 @@ const onSubmit = async () => {
     return;
   }
 
-  const { data, error } = await useFetch(
-    "http://localhost:3000/api/store/update",
-    {
-      method: "POST",
-      body: result.data,
-    }
-  );
+  console.log(result.data);
+  const { data, error } = await useFetch("/api/store/update", {
+    method: "PUT",
+    body: result.data,
+  });
 
   console.log(data, error);
 };
@@ -58,17 +57,12 @@ const onSubmit = async () => {
             <div
               class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
             >
-              <div
-                class="shrink-0 select-none text-base text-gray-500 sm:text-sm/6"
-              >
-                www.orderflow.daanverbeek.nl/
-              </div>
               <input
                 type="text"
                 name="name"
                 id="name"
                 class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
-                placeholder="bakker-bart"
+                placeholder="Bakker Bart"
                 v-model="storeForm.name"
               />
             </div>

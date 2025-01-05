@@ -9,7 +9,6 @@ export default NuxtAuthHandler({
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/auth/login",
-    newUser: "/auth/register",
   },
   callbacks: {
     async session({ session, token }) {
@@ -23,6 +22,7 @@ export default NuxtAuthHandler({
     },
     async redirect({ url, baseUrl }) {
       if (url.startsWith("/")) return `${baseUrl}${url}`;
+
       return `${baseUrl}/dashboard`;
     },
     async signIn({ user, account }) {
@@ -32,9 +32,10 @@ export default NuxtAuthHandler({
             id: user.id,
           },
         });
-        if (count > 0 && user.email) {
+        if (count === 0 && user.email) {
           await prisma.user.create({
             data: {
+              id: user.id,
               email: user.email,
               loginProvider: LoginProvider.GITHUB,
             },

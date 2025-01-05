@@ -12,6 +12,14 @@ import {
 
 const router = useRouter();
 
+const { data: storeData } = useFetch("/api/store/check");
+
+const hasStore = computed(() => storeData.value?.hasStore);
+console.log(hasStore.value);
+if (!hasStore.value) {
+  router.push("/dashboard/onboarding");
+}
+
 const navigation = [
   {
     name: "Dashboard",

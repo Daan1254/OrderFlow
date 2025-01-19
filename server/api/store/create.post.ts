@@ -2,9 +2,12 @@ import { createStoreSchema } from "~/schema/createStoreSchema";
 import prisma from "~/lib/prisma";
 import { randomUUID } from "crypto";
 import { generateSlug } from "~/utils/store";
+import { z } from "zod";
+
+export type CreateStoreBody = z.infer<typeof createStoreSchema>;
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const body = await readBody<CreateStoreBody>(event);
 
   const result = createStoreSchema.safeParse(body);
   if (!result.success) {
@@ -16,8 +19,20 @@ export default defineEventHandler(async (event) => {
   }
 
   const slug = generateSlug(result.data.name);
+
+  const exists = await prisma.store.findFirst({
+    where: {
+      slug: slug,
+    },
+  });
+
+  if (exists) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Store already exists",
+    });
+  }
   const uuid = randomUUID();
-  console.log(event.context.auth.user);
 
   return await prisma.store.create({
     data: {
@@ -32,7 +47,7 @@ export default defineEventHandler(async (event) => {
       url: `${process.env.BASE_URL}/${slug}`,
       StoreSettings: {
         create: {
-          settings: {},
+          settings: body.storeSettings,
           storeId: uuid,
         },
       },

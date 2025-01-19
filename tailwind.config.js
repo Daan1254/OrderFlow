@@ -7,10 +7,6 @@ module.exports = {
   prefix: "",
   
   theme: {
-    colors :{
-      dashboardPrimary: "#1e90ff",
-      dashboardBackground: "#f1f2f6",
-    },
     container: {
       center: true,
       padding: "2rem",
@@ -20,6 +16,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        dashboardPrimary: "#1e90ff",
+        dashboardBackground: "#f1f2f6",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

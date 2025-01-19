@@ -12,12 +12,13 @@ import {
 
 const router = useRouter();
 
+const isModalOpen = ref(true);
 const { data: storeData } = useFetch("/api/store/check");
-
 const hasStore = computed(() => storeData.value?.hasStore);
 console.log(hasStore.value);
 if (!hasStore.value) {
-  router.push("/dashboard/onboarding");
+  console.log("open modal");
+  isModalOpen.value = true;
 }
 
 const navigation = [
@@ -62,6 +63,10 @@ const { data } = useAuth();
 </script>
 
 <template>
+  <CreateStoreModal
+    :isOpen="isModalOpen"
+    :onClose="() => (isModalOpen = false)"
+  />
   <div class="h-screen w-screen flex bg-white flex-row gap-0">
     <div class="flex flex-col gap-y-5 border-gray-200 px-6 border-r shadow-sm">
       <div class="flex h-16 shrink-0 items-center">

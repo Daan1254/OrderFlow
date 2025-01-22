@@ -12,15 +12,6 @@ import {
 
 const router = useRouter();
 
-const isModalOpen = ref(true);
-const { data: storeData } = useFetch("/api/store/check");
-const hasStore = computed(() => storeData.value?.hasStore);
-console.log(hasStore.value);
-if (!hasStore.value) {
-  console.log("open modal");
-  isModalOpen.value = true;
-}
-
 const navigation = [
   {
     name: "Dashboard",
@@ -63,10 +54,6 @@ const { data } = useAuth();
 </script>
 
 <template>
-  <CreateStoreModal
-    :isOpen="isModalOpen"
-    :onClose="() => (isModalOpen = false)"
-  />
   <div class="h-screen w-screen flex bg-white flex-row gap-0">
     <div class="flex flex-col gap-y-5 border-gray-200 px-6 border-r shadow-sm">
       <div class="flex h-16 shrink-0 items-center">
@@ -137,9 +124,8 @@ const { data } = useAuth();
             </ul>
           </li> -->
           <li class="-mx-6 mt-auto">
-            <a
-              href="#"
-              class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50"
+            <div
+              class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900"
             >
               <img
                 class="size-8 rounded-full bg-gray-50"
@@ -148,7 +134,12 @@ const { data } = useAuth();
               />
               <span class="sr-only">Your profile</span>
               <span aria-hidden="true">{{ data?.user.name }}</span>
-            </a>
+              <span
+                @click="router.push('/dashboard')"
+                class="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-white px-2.5 py-0.5 text-center text-xs/5 font-medium text-gray-600 ring-1 ring-inset ring-gray-200 hover:ring-dashboardPrimary hover:text-dashboardPrimary cursor-pointer transition-all duration-200"
+                >Switch Store</span
+              >
+            </div>
           </li>
         </ul>
       </nav>

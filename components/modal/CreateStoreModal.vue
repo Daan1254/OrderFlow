@@ -64,7 +64,7 @@ const onSubmit = handleSubmit(async (values) => {
     v-model="props.isOpen"
     :isOpen="props.isOpen"
     @onClose="props.onClose"
-    :canBeClosed="false"
+    :canBeClosed="true"
   >
     <div class="sm:flex sm:items-start">
       <div

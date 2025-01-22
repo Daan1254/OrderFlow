@@ -16,7 +16,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        dashboardPrimary: "#1e90ff",
+        // dashboardPrimary: "#1e90ff",
+        dashboardPrimary: "#1e293b",
         dashboardBackground: "#f1f2f6",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

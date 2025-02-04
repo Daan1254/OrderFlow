@@ -2,15 +2,21 @@
 definePageMeta({ auth: true });
 const { data } = useAuth();
 
-const { data: stores } = useFetch("/api/store/list");
+const { data: stores, refresh, status } = useFetch("/api/store/list");
 const isModalOpen = ref(false);
 </script>
 
 <template>
   <CreateStoreModal
     :isOpen="isModalOpen"
-    :onClose="() => (isModalOpen = false)"
+    :onClose="
+      () => {
+        isModalOpen = false;
+        refresh();
+      }
+    "
   />
+  <Loading :isLoading="status === 'pending'" />
   <div class="bg-dashboardBackground min-h-screen w-full">
     <div class="flex flex-col justify-center items-center pt-14 px-4">
       <h1 class="text-3xl font-bold mb-2">

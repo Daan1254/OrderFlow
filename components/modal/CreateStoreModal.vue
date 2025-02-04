@@ -18,7 +18,7 @@ const props = defineProps({
 
 const toast = useToast();
 
-const { handleSubmit, handleReset, values, errors } = useForm({
+const { handleSubmit, handleReset, values, errors, isSubmitting } = useForm({
   initialValues: {
     name: "",
     settings: {
@@ -66,6 +66,7 @@ const onSubmit = handleSubmit(async (values) => {
     @onClose="props.onClose"
     :canBeClosed="true"
   >
+    <Loading :isLoading="isSubmitting" />
     <div class="sm:flex sm:items-start">
       <div
         class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:size-10"

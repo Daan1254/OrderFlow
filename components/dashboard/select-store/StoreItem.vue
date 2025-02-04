@@ -1,6 +1,5 @@
 <script setup lang="ts">
-export type Store = { id: string; name: string; slug: string };
-
+import type { Store } from "~/composables/useStore";
 const props = defineProps<{
   store: Store;
 }>();
@@ -18,8 +17,7 @@ const props = defineProps<{
         class="w-32 h-32 rounded-lg bg-white flex items-center justify-center shadow-lg group-hover:border-4 border-dashboardPrimary"
       >
         <span class="text-4xl font-bold text-dashboardPrimary">
-          {{ store.name.charAt(0).toUpperCase()
-          }}{{ store.name.charAt(1).toUpperCase() }}
+          {{ store.name.charAt(0).toUpperCase() }}
         </span>
       </div>
       <span class="text-lg font-medium">{{ store.name }}</span>
